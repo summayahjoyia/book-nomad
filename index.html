@@ -2,6 +2,7 @@
 <html>
         <head>
             <script src="https://unpkg.com/globe.gl"></script>
+            <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
         </head>
         <body>
             <div id="globe">
@@ -9,6 +10,12 @@
             </div>
             <script>
                 new Globe(document.getElementById("globe")).globeImageUrl('https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg')
+                fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQmLBrYzwJbawiNJ76gGy7r2B8b1Mn6ywrudVrGZBCeVs8WtsKStSItqrJZh2TK-QE_3E6Qd6mDJNtG/pub?gid=0&single=true&output=csv")
+  .then(res     => res.text())
+   .then(text => {
+    const rows = Papa.parse(text, { header: true, skipEmptyLines: true }).data
+    console.log(rows)
+  })
             </script>
         </body>
 </html>
