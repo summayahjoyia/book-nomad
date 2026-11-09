@@ -35,6 +35,25 @@
             .polygonCapColor(d=> read[d.properties.ADMIN]? "#4da6ff" : "rgba(100,100,100,0.4)")
             .polygonSideColor(() => "rgba(0,0,0,0.1)")
             .polygonStrokeColor(() => "#111")
+            .polygonLabel(d=>{
+                //getting the country's name
+                const name = d.properties.ADMIN
+                const row = read[name]
+                if (!row) return `<b>${name}</b><br>No books yet`
+                
+                let html = `<b>${name}</b>`
+                const readers = ["summayah", "pranati", "eoghan"]
+
+                readers.forEach(person => {
+                    const cell = row[person]
+                    if (cell && cell.trim()){
+                        const books = cell.split(/[;\n]/).map(b => b.trim()).filter(Boolean)
+                        const label = person[0].toUpperCase() + person.slice(1)
+                        html += `<br><b>${label}</b><br>${books.join("<br>")}`
+                    }
+                })
+                return html
+            })
 
     })
   })
